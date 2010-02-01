@@ -20,7 +20,7 @@ function [ tree ] = decision_tree_learning( examples, attribs, targets )
         tree.kids = [];
         tree.class = targets(1);
         %tree.class = emolab2str(targets(1));
-    elseif (length(attribs) == 0)
+    elseif (isempty(attribs))
         % no more attributes to check
         % return leaf node with the most frequent element of (targets)
         %tree.op = '';
@@ -34,20 +34,20 @@ function [ tree ] = decision_tree_learning( examples, attribs, targets )
         tree.kids = cell(1, 2);
         %tree.class = '';
         % binary attributes
-        for attributeVal = 1:2
+        for attributeVal = 0:1
             %tree.kids{i} = 5;         
             % column best
             indexSet = find(examples(:, best) == attributeVal);
             %examplesi = examples(examples(:, best) == 1, :)
             examplesSubtree = examples(indexSet, :);
-            targetsSubtree = targets(indexSet);
             if (isempty(examplesSubtree))
                 % if no more examples don't recurse, return a leaf
                 %tree.op = '';
                 tree.kids = [];
                 tree.class = majority_value(targets);
             else
-                tree.kids{i} = decision_tree_learning( ...
+                targetsSubtree = targets(indexSet);
+                tree.kids{attributeVal + 1} = decision_tree_learning( ...
                     examplesSubtree, ...
                     attribs(attribs ~= best), ...
                     targetsSubtree);

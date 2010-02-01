@@ -21,13 +21,13 @@ function [ bestAttribute ] = choose_attribute( attribs, examples, targets )
     bestAttribute = attribs(maxIndex);
 end
 
-function e = entropy(p, n)
+function [ e ] = entropy(p, n)
     a = p / (p + n);
     b = n / (p + n);
-    e = - a * log2(a) - b * log2(b);
+    e = abs(- a * log2(a + eps) - b * log2(b + eps));
 end
 
-function suma = remainder(positive, negative, attribs, examples, targets, index)
+function [ suma ] = remainder(positive, negative, attribs, examples, targets, index)
     % binary attributes 0..1
     attribValues = 1;
     suma = 0;
@@ -38,7 +38,7 @@ function suma = remainder(positive, negative, attribs, examples, targets, index)
         %examplesi = examples(examples(:, best) == 1, :)
         %examplesAttrib = examples(indexSet, :);
         pos = length(targetsAttrib(targetsAttrib == 1));
-        neg = length(targets) - pos;
+        neg = length(targetsAttrib) - pos;
         
         suma = suma + (pos + neg) * entropy(pos, neg);
     end
