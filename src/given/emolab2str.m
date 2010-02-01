@@ -1,7 +1,7 @@
 function a = emolab2str(b)
 switch b
     case 1
-          a = 'anger';
+        a = 'anger';
     case 2
         a = 'disgust';
     case 3
