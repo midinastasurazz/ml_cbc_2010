@@ -1,4 +1,4 @@
-addpath(genpath(fullfile(pwd)));
+addpath(genpath(pwd));
 
 attribs = 1:45;
 [examples, targets] = loaddata('cleandata_students.txt');

@@ -16,14 +16,14 @@ function [ tree ] = decision_tree_learning( examples, attribs, targets )
     % create tree structure    
     if (allSame == 1)
         % return leaf node with label of the classification
-        %tree.op = '';
+        tree.op = -1;
         tree.kids = [];
         tree.class = targets(1);
         %tree.class = emolab2str(targets(1));
     elseif (isempty(attribs))
         % no more attributes to check
         % return leaf node with the most frequent element of (targets)
-        %tree.op = '';
+        tree.op = -1;
         tree.kids = [];
         tree.class = majority_value(targets);
     else
@@ -42,7 +42,7 @@ function [ tree ] = decision_tree_learning( examples, attribs, targets )
             examplesSubtree = examples(indexSet, :);
             if (isempty(examplesSubtree))
                 % if no more examples don't recurse, return a leaf
-                %tree.op = '';
+                tree.op = -1;
                 tree.kids = [];
                 tree.class = majority_value(targets);
             else

@@ -22,8 +22,8 @@ function [ bestAttribute ] = choose_attribute( attribs, examples, targets )
 end
 
 function [ e ] = entropy(p, n)
-    a = p / (p + n);
-    b = n / (p + n);
+    a = p / (p + n + eps);
+    b = n / (p + n + eps);
     e = abs(- a * log2(a + eps) - b * log2(b + eps));
 end
 
