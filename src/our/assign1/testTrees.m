@@ -1,19 +1,19 @@
-function [classification] = testTrees(trees, examples)
+function [classification] = testTrees(trees, test)
 
-  classes = zeros( length(examples), length(trees) );
+  classes = zeros( length(test(:,1)), length(trees) );
 
-	classification = zeros(length(examples),1);
+	classification = zeros(length(test(:,1)),1);
 
-  for ex = 1:length(examples)
+  for ex = 1:length(test(:,1))
     for tr = 1:length(trees)
-      classes(ex, tr) = executeTree(trees{tr}, examples(ex,:));
-      if(executeTree(trees{tr}, examples(ex,:)) == 1)
-	classification(ex) = tr;
+      classes(ex, tr) = executeTree(trees{tr}, test(ex,:));
+      if(executeTree(trees{tr}, test(ex,:)) == 1)
+	%classification(ex) = tr;
         emolab2str(tr);
       end
     end
   end
-  %classification = classes;
+  classification = classes;
 end
 
 function [res] = executeTree(tree, example)

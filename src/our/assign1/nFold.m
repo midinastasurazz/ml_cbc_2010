@@ -1,9 +1,13 @@
-function confMatrix = nFold(examples, tergets, n)
+function confMatrix = nFold(examples, targets, n)
 
 N = length(examples);
-foldsize = N/n
+foldsize = N/n;
 
 emotion_targets = cell(1, 6);
+attribs = 1:45;
+
+confMatrix = zeros(6);
+
 for i = 1:6
     emotion_targets{i} = remap_emotion(targets, i);
 end
@@ -12,19 +16,21 @@ trees = cell(1, 6);
 
 for count = 0:foldsize-1
 
-testing = examples(count*n+1:(count+1)*n,:);
+test = examples(count*n+1:(count+1)*n,:);
 training = [examples(1:count*n,:) ; examples((count+1)*n+1:N,:)];
+newTargets = targets(count*n+1:(count+1)*n);
 
 	for i = 1:6
-	    trees{i} = decision_tree_learning(examples, ...
-		attribs, emotion_targets{i});
+		newemotion_targets{i} = [emotion_targets{i}(1:count*n) ; emotion_targets{i}((count+1)*n+1:N)];
+	    trees{i} = decision_tree_learning(training, ...
+		attribs, newemotion_targets{i});
+	%DrawDecisionTree(trees{i},emolab2str(i))
 	end
+
+	class = testTrees(trees,test);
+	
+	confMatrix = confMatrix + confusion_matrix(class,newTargets);
 
 end
 
-int init = 0;
-
-while init <= N
-
-init = init + 10
-
+end
