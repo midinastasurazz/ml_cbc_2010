@@ -1,28 +1,20 @@
 function [classification] = testTrees(trees, examples)
+    
+  % 100x6 matrix, one column for each tree/emotion
+  %emotionClasses = zeros(length(examples), length(trees));
 
-  classes = zeros( length(examples), length(trees) );
-
-	classification = zeros(length(examples),1);
+  classification = zeros(length(examples), 1);
 
   for ex = 1:length(examples)
     for tr = 1:length(trees)
-      classes(ex, tr) = executeTree(trees{tr}, examples(ex,:));
-      if(executeTree(trees{tr}, examples(ex,:)) == 1)
-	classification(ex) = tr;
-        emolab2str(tr);
+      tempRes = executeTree(trees{tr}, examples(ex,:));
+      %emotionClasses(ex, tr) = tempRes;
+      if(tempRes == 1)
+        classification(ex) = tr;
+        % we classified current example, no need to execute other trees
+        continue;
       end
     end
   end
-  %classification = classes;
-end
-
-function [res] = executeTree(tree, example)
-  
-  if (length(tree.kids) > 0)
-    branch = example(tree.op);
-    subtree = tree.kids{branch + 1};
-    res = executeTree(subtree, example);
-  else
-    res = tree.class; 
-  end
+  %classification = emotionClasses;
 end

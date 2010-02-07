@@ -1,6 +1,8 @@
 function [confusionM] = confusion_matrix(classifications, targets)
 
-  confusionM = zeros( 6, 6 );  
+  % 6x6 confusion matrix
+  size = length(classifications(1, :));
+  confusionM = zeros(size, size);  
 
   for t = 1:length(targets)
     row = targets(t);
