@@ -25,8 +25,9 @@ function [ totalError, percentageError, confusionM ] = ...
             trainTargets = emotion_targets{i};
             trainTargets(index) = [];
             trees{i} = decision_tree_learning(trainEx, ...
-                attribs, trainTargets);
+                attribs, trainTargets);   
         end
+       
         classification = testAllTrees(trees, testEx);
         currentConfM = confusion_matrix(classification, testTargets);
         
