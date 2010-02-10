@@ -1,0 +1,68 @@
+function newClass = clarify(class, trees, test)
+len = getTreeLen(trees);
+newClass = class;
+minDepth = 100;
+maxDepth = 0;
+bestChoise = 1;
+for i = 1:length(class)
+    if (sum(class(i,:))>1)
+        for j = 1:length(class(i,:))
+            if(class(i,j) == 1)
+                depth = findDepth(trees{j},test(i,:))/len(j);
+%                 if (depth < minDepth)
+%                     minDepth = depth;
+%                     bestChoise = j;
+%                 end
+                if (depth > maxDepth)
+                    maxDepth = depth;
+                    bestChoise = j;
+                end
+            end
+        end
+        newClass(i,:) = 0;
+        newClass(i,bestChoise) = 1;
+    end
+    if (sum(class(i,:))==0)
+        for j = 1:length(class(i,:))
+            depth = findDepth(trees{j},test(i,:))/len(j);
+             if (depth < minDepth)
+                 minDepth = depth;
+                 bestChoise = j;
+             end
+%             if (depth > maxDepth)
+%                 maxDepth = depth;
+%                 bestChoise = j;
+%             end
+        end
+        newClass(i,bestChoise) = 1;
+    end
+    
+end
+
+end
+
+function depth = findDepth(tree, example)
+if (~isempty(tree.kids))
+    branch = example(tree.op);
+    subtree = tree.kids{branch + 1};
+    depth = findDepth(subtree, example) + 1;
+else
+    depth = 1;
+end
+end
+
+function len = getTreeLen(trees)
+
+for i=1:length(trees)
+    tree = trees{i};
+    if (~isempty(tree.kids))
+        subtree1 = tree.kids{1};
+        subtree2 = trees{i}.kids{2};
+        len(i) = max (getTreeLen(subtree1),getTreeLen(subtree2));
+    else
+        len(i) = 1;
+    end
+    
+end
+
+end

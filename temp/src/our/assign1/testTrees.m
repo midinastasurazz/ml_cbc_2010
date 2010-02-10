@@ -18,7 +18,7 @@ end
 
 function [res] = executeTree(tree, example)
   
-  if (~isempty(tree.kids))
+  if (length(tree.kids) > 0)
     branch = example(tree.op);
     subtree = tree.kids{branch + 1};
     res = executeTree(subtree, example);

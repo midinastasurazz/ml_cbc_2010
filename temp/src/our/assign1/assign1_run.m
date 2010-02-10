@@ -1,11 +1,11 @@
 startup;
 testing;
 classifications = testTrees(trees,examples);
-actual = confusion_matrix(classifications, targets);
+actual = confusion_matrix(classifications, targets)
 
 n = 10;
 
-pred = nFold(examples, targets, n);
+pred = nFold(examples, targets, n)
 
 meanError = trace(actual - pred);
 
