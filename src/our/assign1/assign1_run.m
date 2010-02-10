@@ -7,6 +7,9 @@ n = 10;
 
 pred = nFold(examples, targets, n);
 
+[recall precision fMeasure] = ...
+    calculateRecallPrecision(pred, actual, 1);
+
 meanError = trace(actual - pred);
 
 sprintf('The error is %d%%', meanError)
