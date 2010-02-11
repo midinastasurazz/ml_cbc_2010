@@ -1,10 +1,13 @@
 function newClass = clarify(class, trees, test)
 
+% improves the classification matrix
+% select values for missclassified exaples
+
 len = zeros(1,6);
-termNodes = zeros(1,6)
+termNodes = zeros(1,6);
 for k=1:length(trees)
-    len(k) = getTreeLen(trees{k})-1;
-termNodes(k) = getTermNodes(trees{k})
+    len(k) = getTreeLen(trees{k})-1; % length of the trees
+termNodes(k) = getTermNodes(trees{k}); % terminal nodes of the trees
 end
 
 newClass = class;
@@ -12,16 +15,16 @@ minDepth = 100;
 maxDepth = 0;
 bestChoise = 1;
 for i = 1:length(class)
-    if (sum(class(i,:))>1)
+    if (sum(class(i,:))>1) % more than one classification
         for j = 1:length(class(i,:))
             if(class(i,j) == 1)
-                depth = findDepth(trees{j},test(i,:));
+                depth = findDepth(trees{j},test(i,:)); % calculate the depth of the path
 %                 if (depth < minDepth)
 %                     minDepth = depth;
 %                     bestChoise = j;
 %                 end
                 if (depth > maxDepth)
-                    maxDepth = depth;
+                    maxDepth = depth; % select as best choise the one that goes to max depth
                     bestChoise = j;
                 end
             end
@@ -29,11 +32,11 @@ for i = 1:length(class)
         newClass(i,:) = 0;
         newClass(i,bestChoise) = 1;
     end
-    if (sum(class(i,:))==0)
+    if (sum(class(i,:))==0) % no classification exists
         for j = 1:length(class(i,:))
             depth = findDepth(trees{j},test(i,:));
             if (depth < minDepth)
-                minDepth = depth;
+                minDepth = depth;% select as best choise the one tha has the min depth
                 bestChoise = j;
             end
 %             if (depth > maxDepth)
@@ -49,6 +52,7 @@ end
 end
 
 function depth = findDepth(tree, example)
+% calculate the depth of a path
 if (~isempty(tree.kids))
     branch = example(tree.op);
     subtree = tree.kids{branch + 1};
@@ -59,6 +63,7 @@ end
 end
 
 function len = getTreeLen(tree)
+% calculate the length of the tree
 if (~isempty(tree.kids))
     subtree1 = tree.kids{1};
     subtree2 = tree.kids{2};
@@ -72,6 +77,7 @@ end
 
 
 function nodes = getTermNodes(tree)
+% calculate the terminal nodes of the tree
 if (~isempty(tree.kids))
     subtree1 = tree.kids{1};
     subtree2 = tree.kids{2};

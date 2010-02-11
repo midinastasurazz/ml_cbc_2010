@@ -1,4 +1,5 @@
-function [recall, precision, fMeasure] = calculateRecallPrecision(confusionM, actualM, fMeasureAlpha)
+function [ recall, precision, fMeasure] = ...
+    calculateRecallPrecision(confusionM, actualM, fMeasureAlpha)
 
 % returns the racall and precision rates ans teh F measures using the confusion matrix
 

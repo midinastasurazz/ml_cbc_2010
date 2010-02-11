@@ -3,7 +3,7 @@ function prune_example(x,y)
 % x: noSamples x 45 (as returned by loaddata)
 % y: noSamples x 1 (as returned by loaddata)
 
-tree = treefit(x,y,'method','classification','catidx',1:100,'splitmin',1); % Fit a tree-based model for classification
+tree = treefit(x,y,'method','classification','catidx',1:100,'splitmin',1); %Fit a tree-based model for classification
 % Compute error rate for tree
 % also returns the vector
 % s containing the standard error of each cost value, the vector

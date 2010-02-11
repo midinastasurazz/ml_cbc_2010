@@ -30,11 +30,11 @@ for count = 0:foldsize-1
         %DrawDecisionTree(trees{i},emolab2str(i))
     end
 
-    class = myTest(trees,test); % the classification
+    class = testTrees(trees,test); % the classification
     
     newClass = clarify(class,trees,test); % the improved classification
     
-    confMatrix = confMatrix + confusion_matrix(newClass,newTargets); % the confusion matrix
+    confMatrix = confMatrix + confusion_matrix(newClass,newTargets);
     
 end
 
