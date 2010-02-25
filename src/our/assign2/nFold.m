@@ -1,9 +1,6 @@
 function [ confusionM, recall, precision, fMeasure ] = ...
     nFold( inputs, targets, n, trainFun, actualM)
 
-
-    actualM = trainOnEverything();
-
     [inputsNN, targetsNN] = ANNdata(inputs, targets);
     
     foldsize = length(inputsNN) / n;
@@ -45,5 +42,5 @@ function [ confusionM, recall, precision, fMeasure ] = ...
 
         confusionM = confusionM + confusionMatrix(classifications, correctClassifications); 
     end
-    [recall precision fMeasure] = calculateRecallPrecision(actualM, confusionM, 1);
+    [recall precision fMeasure] = calculateRecallPrecision(confusionM, actualM, 1);
 end
