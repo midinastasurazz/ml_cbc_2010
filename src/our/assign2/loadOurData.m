@@ -1,0 +1,1 @@
+[x y] = loaddata('cleandata_students.txt');
