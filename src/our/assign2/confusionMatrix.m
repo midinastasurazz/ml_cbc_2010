@@ -1,5 +1,6 @@
-function [ confM ] = confusionMatrix( predictions, correctClassifications, confM )
+function [ confM ] = confusionMatrix( predictions, correctClassifications)
 
+    confM = zeros(6);
     n = length(predictions);   
     for i = 1:n
         row = correctClassifications(i);

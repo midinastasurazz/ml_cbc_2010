@@ -1,4 +1,8 @@
-function [ confusionM ] = nFold( inputs, targets, n )
+function [ confusionM, recall, precision, fMeasure ] = ...
+    nFold( inputs, targets, n, trainFun, actualM)
+
+
+    actualM = trainOnEverything();
 
     [inputsNN, targetsNN] = ANNdata(inputs, targets);
     
@@ -12,8 +16,8 @@ function [ confusionM ] = nFold( inputs, targets, n )
           0 1;0 1;0 1; 0 1;0 1];
 
     % size of the last layer must be 6 - number of classes
-    Si = [34 6];
-    TransferFs = {'logsig' 'purelin'};
+    Si = [10 10 6];
+    TransferFs = {'tansig' 'tansig', 'tansig'};
     for foldi = 1:n
         index = ((foldi - 1) * foldsize + 1):(foldi * foldsize);
         testEx = inputsNN(:, index);
@@ -26,19 +30,20 @@ function [ confusionM ] = nFold( inputs, targets, n )
 
         % creata a new neural network
         % trainrp - fast but inaccurate
-        [net] = newff(PR, Si, TransferFs, 'trainrp');
+        [net] = newff(PR, Si, TransferFs, trainFun, 'learngdm', 'mse');
 
         net.trainParam.mem_reduc = 10;
-        net.trainParam.show = 1000;
+        net.trainParam.show = NaN;
         net.trainParam.epochs = 100;
         net.trainParam.goal = 0.001;
         net.trainParam.lr = 'learngdm'; % traingdm
 
         [net] = train(net, trainEx, trainTargets);
 
-        [classifications] = testANN(net, testEx);
+        [classifications] = testANN2(net, testEx);
         [correctClassifications] = testTargets;
 
-        confusionM = confusionMatrix(classifications, correctClassifications, confusionM); 
+        confusionM = confusionM + confusionMatrix(classifications, correctClassifications); 
     end
+    [recall precision fMeasure] = calculateRecallPrecision(actualM, confusionM, 1);
 end
