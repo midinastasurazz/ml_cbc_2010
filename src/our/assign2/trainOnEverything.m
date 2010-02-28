@@ -19,7 +19,7 @@ function [confM net] = trainOnEverything()
     net.trainParam.show = NaN;
     net.trainParam.epochs = 100;
     net.trainParam.goal = 0.005;
-    net.trainParam.lr = 0.05; % traingdm
+    net.trainParam.lr = 0.5; % traingdm
 
     [net] = train(net, x2, y2);
 
