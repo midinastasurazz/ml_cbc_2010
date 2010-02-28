@@ -1,4 +1,4 @@
-function [confM] = trainOnEverything()
+function [confM net] = trainOnEverything()
     [x, y] = loaddata('cleandata_students.txt');
     [x2, y2] = ANNdata(x,y);
 
@@ -19,13 +19,12 @@ function [confM] = trainOnEverything()
     net.trainParam.show = NaN;
     net.trainParam.epochs = 100;
     net.trainParam.goal = 0.005;
-    net.trainParam.lr = 'learngdm'; % traingdm
+    net.trainParam.lr = 0.05; % traingdm
 
     [net] = train(net, x2, y2);
 
     [classifications] = testANN2(net, x2);
     [correctClassifications] = y;
 
-    confM = zeros(6);
     confM = confusionMatrix(classifications, correctClassifications);
 end
