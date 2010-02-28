@@ -9,22 +9,23 @@ function [confM] = trainOnEverything()
           0 1;0 1;0 1; 0 1;0 1];
 
     % size of the last layer must be 6 - number of classes
-    Si = [10 6];
-    TransferFs = {'tansig' 'purelin'};
+    Si = [10 10 6];
+    TransferFs = {'tansig' 'tansig' 'tansig'};
 
     % creata a new neural network
     [net] = newff(PR, Si, TransferFs, 'trainrp');
 
-    net.trainParam.show = 5;
+    net.trainParam.mem_reduc = 10;
+    net.trainParam.show = NaN;
     net.trainParam.epochs = 100;
     net.trainParam.goal = 0.005;
     net.trainParam.lr = 'learngdm'; % traingdm
 
     [net] = train(net, x2, y2);
 
-    [classifications] = testANN(net, x2);
+    [classifications] = testANN2(net, x2);
     [correctClassifications] = y;
 
     confM = zeros(6);
-    confM = confusionMatrix(classifications, correctClassifications, confM);
+    confM = confusionMatrix(classifications, correctClassifications);
 end
