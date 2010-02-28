@@ -25,14 +25,14 @@ function [ confusionM, recall, precision, fMeasure ] = ...
         trainTargets = targetsNN;
         trainTargets(:, index) = [];
 
-        % creata a new neural network
-        % trainrp - fast but inaccurate
+        % create a new neural network
+        % trainrp - fast
         [net] = newff(PR, Si, TransferFs, trainFun, 'learngdm', 'mse');
 
         net.trainParam.mem_reduc = 10;
         net.trainParam.show = NaN;
-        net.trainParam.epochs = 100;
-        net.trainParam.goal = 0.001;
+        net.trainParam.epochs = 10;
+        net.trainParam.goal = 0.005;
         net.trainParam.lr = 'learngdm'; % traingdm
 
         [net] = train(net, trainEx, trainTargets);

@@ -9,12 +9,13 @@ function [confM] = trainOnEverything()
           0 1;0 1;0 1; 0 1;0 1];
 
     % size of the last layer must be 6 - number of classes
-    Si = [10 6];
-    TransferFs = {'tansig' 'purelin'};
+    Si = [10 10 6];
+    TransferFs = {'tansig' 'tansig' 'tansig'};
 
     % creata a new neural network
     [net] = newff(PR, Si, TransferFs, 'trainrp');
 
+    net.trainParam.mem_reduc = 10;
     net.trainParam.show = NaN;
     net.trainParam.epochs = 100;
     net.trainParam.goal = 0.005;

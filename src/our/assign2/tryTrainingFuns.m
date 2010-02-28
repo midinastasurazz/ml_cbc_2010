@@ -1,13 +1,13 @@
-function [ recall precison fMeasure ] = tryTrainingFuns()
+function [ recall precision fMeasure ] = tryTrainingFuns()
 %UNTITLED1 Summary of this function goes here
 %   Detailed explanation goes here
   funs = {
-    'trainbfg',
+%    'trainbfg',
     'trainbr',
-    'trainc',
+%    'trainc',
     'traincgb',
-    'traincgf',
-    'traincgp',
+%    'traincgf',
+%    'traincgp',
     'traingd',
     'traingda',
     'traingdm',
@@ -17,9 +17,18 @@ function [ recall precison fMeasure ] = tryTrainingFuns()
     'trainr',
     'trainrp',
     'trainscg'};
-  
-  for i = 1:length(funs)
-    [ confusionM, recall, precision, fMeasure ] = nFold(x, y, 10, 'trainrp', actualM)
-    
+
+  n = length(funs);
+  recall = zeros(n, 1);
+  precision = zeros(n, 1);
+  fMeasure = zeros(n, 1);
+  actualM = trainOnEverything();
+  [x y] = loaddata('cleandata_students.txt');
+  for i = 1:n
+    i
+    [ confusionMi, recalli, precisioni, fMeasurei ] = nFold(x, y, 10, funs{i}, actualM);
+    recall(i, 1) = recalli;
+    precision(i, 1) = precisioni;
+    fMeasure(i, 1) = fMeasurei;
   end
 end
