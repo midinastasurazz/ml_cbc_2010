@@ -1,7 +1,7 @@
 % y = testCBR(CBR, x),
 % which takes your train CBR system and the features x as returned by loaddata
 % and produces a vector of label predictions y in the format of loaddata..
-
+%
 function [y] = testCBR( cbr, x )
 
 	% loop over the inputted cases

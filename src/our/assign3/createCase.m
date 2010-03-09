@@ -8,11 +8,14 @@
 %			- if the target is 0, it is a new case!
 % au 	 : a vector of au's that make up the case - e.g. [9,12,35]
 %			- always in ascending order due to the createCase method
+% typicality : ?? how often a case occurs? - need to look up
 %
 function [newcase] = createCase( target, aus )
 
 	newcase.target = target;
 	newcase.au = [];
+	
+	newcase.typicality = 0;
 	
 	pos = 1;
 	

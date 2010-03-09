@@ -1,5 +1,8 @@
-
-
+% [ totalError, percentageError, confusionM ] = CBRnfold( n, examples, targets )
+% Most of this code was lifted from project1. Performs nfold on CBR with examples
+% and targets. Calculates the error, percentage error and confusion matrix as
+% before.
+%
 function [ totalError, percentageError, confusionM ] = CBRnfold( n, examples, targets )
 
 	foldsize = length(examples) / n;
@@ -20,7 +23,7 @@ function [ totalError, percentageError, confusionM ] = CBRnfold( n, examples, ta
         
         classification = testCBR( cbr, testExamples );
         
-        currentConfM = CBRconfusion_matrix(classification, testTargets);
+        currentConfM = CBRconfusion_matrix(classification', testTargets);
         
         currentError = foldsize - trace(currentConfM);
         errorCount(fold) = currentError;
@@ -31,6 +34,9 @@ function [ totalError, percentageError, confusionM ] = CBRnfold( n, examples, ta
 	
 	percentageError = 1 - trace(confusionM) / length(examples);
     totalError = sum(errorCount) / n;
+    
+    % The perfect output should be ...
+    % CBRconfusion_matrix( targets, targets )
 end
 
 

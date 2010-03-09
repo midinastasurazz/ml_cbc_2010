@@ -10,14 +10,17 @@
 % count : the number of cases in the system ( count+1 is the next free position)
 % cases : a cell of cases that are in the cbr system
 %
+% index : if cases appear as single au's
 function [cbr] = CBRinit( x, y )
 
 	cbr.count = 0;
 	cbr.cases = [];
 	
-	% loop round the examples and targets
-	for i=1:length(x)
+	cbr.index = zeros(6, 45);
 	
+	% loop round the examples and targets
+	for i=1:length(y)
+		% Create a case, and retain it in the CBR
 		newcase = createCase( y(i), x(i,:) );
 		cbr = retain( cbr, newcase );
 	end

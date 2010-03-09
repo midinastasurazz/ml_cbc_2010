@@ -4,7 +4,7 @@
 % system in one go. This functionality will enable to use the function during
 % initialization as well. Think what will happen if you try to add a case to the
 % CBR system that is already known to the system.
-
+%
 function [cbr] = retain( cbr, solvedcase )
 
 	% TODO: Check whether the case already exists in the system	
@@ -14,5 +14,9 @@ function [cbr] = retain( cbr, solvedcase )
 	
 	% Add the case
 	cbr.cases{cbr.count} = solvedcase;
+	
+	if( length( solvedcase.au ) == 1 )
+		cbr.index( solvedcase.target, solvedcase.au(1) ) = 1;
+	end
 end
 
