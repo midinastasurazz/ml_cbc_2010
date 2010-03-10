@@ -23,7 +23,7 @@ function [ totalError, percentageError, confusionM ] = CBRnfold( n, examples, ta
         
         classification = testCBR( cbr, testExamples );
         
-        currentConfM = CBRconfusion_matrix(classification, testTargets);
+        currentConfM = CBRconfusion_matrix(classification', testTargets);
         
         currentError = foldsize - trace(currentConfM);
         errorCount(fold) = currentError;

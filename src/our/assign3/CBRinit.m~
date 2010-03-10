@@ -12,14 +12,18 @@
 %
 % index : if cases appear as single au's
 function [cbr] = CBRinit( x, y )
+
 	cbr.count = 0;
 	cbr.cases = [];
-	cbr.index = zeros(6, 45);	
+	
+	cbr.index = zeros(6, 45);
+	
 	% loop round the examples and targets
 	for i=1:length(y)
 		% Create a case, and retain it in the CBR
 		newcase = createCase( y(i), x(i,:) );
 		%cbr = retain( cbr, newcase );
+
 		if (cbr.count == 0)
 			cbr.count = cbr.count+1;
 			%add first case
@@ -39,7 +43,10 @@ function [cbr] = CBRinit( x, y )
 				cbr.count = cbr.count+1;
 				%add the new case
 				cbr.cases{cbr.count} = addCase(cbr.cases{cbr.count},newcase); 
+			
 		end
+
+
 	end
 end 
 

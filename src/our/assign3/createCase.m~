@@ -15,6 +15,7 @@ function [newcase] = createCase( target, aus )
 	newcase.target = target;
 	newcase.au = [];
 
+% typicality : ?? how often a case occurs? - need to look up	
 	newcase.typicality = 0;
 	
 	pos = 1;
