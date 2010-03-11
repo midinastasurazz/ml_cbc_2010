@@ -3,9 +3,15 @@
 % and targets. Calculates the error, percentage error and confusion matrix as
 % before.
 %
-function [ totalError, percentageError, confusionM ] = CBRnfold( n, examples, targets )
+function [ totalError, percentageError, confusionM ] = CBRnfold( n, examplesin, targetsin )
 
-	foldsize = length(examples) / n;
+	foldsize = round( length(examplesin) / n );
+	
+	%indexIn = 1+round( (length(examplesin)-1).*rand(foldsize*n,1) );
+	indexIn = 1:foldsize*n;
+	
+	examples = examplesin(indexIn,:);
+	targets = targetsin(indexIn,:);
 	confusionM = zeros(6, 6);
 	
 	for fold=1:n
