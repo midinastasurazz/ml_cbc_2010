@@ -9,4 +9,5 @@ addpath(genpath(pwd));
 
 %assign2
 [x, y] = loaddata('cleandata_students.txt');
+[xn, yn] = loaddata('noisydata_students.txt');
 [x2, y2] = ANNdata(x,y);

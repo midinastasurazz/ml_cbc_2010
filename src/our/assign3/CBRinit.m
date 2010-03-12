@@ -14,33 +14,26 @@
 function [cbr] = CBRinit( x, y )
 	cbr.count = 0;
 	cbr.cases = [];
+	
 	cbr.index = zeros(6, 45);	
+	
+	newcase = [];
+	lengths = [];
+	
 	% loop round the examples and targets
 	for i=1:length(y)
 		% Create a case, and retain it in the CBR
-		newcase = createCase( y(i), x(i,:) );
-		%cbr = retain( cbr, newcase );
-		if (cbr.count == 0)
-			cbr.count = cbr.count+1;
-			%add first case
-			cbr.cases{cbr.count} = addCase(cbr.cases{cbr.count},newcase);
-		end
-	    	else
-			int i = 1;
-			while (i<=cbr.count)
-				if(cbr.cases{i}.target == newcase.target)
-					%add same cases
-					cbr.cases{i} = addCase(cbr.cases{i},newcase);
-					break;
-		    		end
-				i = i+1;
-			end
-			if(i > cbr.count)
-				cbr.count = cbr.count+1;
-				%add the new case
-				cbr.cases{cbr.count} = addCase(cbr.cases{cbr.count},newcase); 
-		end
+		newcase{i} = createCase( y(i), x(i,:) );
+		lengths(i) = length( newcase{i}.au );
 	end
+	
+	[sorted, perms] = sort( lengths );
+		
+	for j=1:length(newcase)
+		cbr = retain( cbr, newcase{perms(j)} );
+	end
+	
+	
 end 
 
 

@@ -3,10 +3,20 @@
 % and targets. Calculates the error, percentage error and confusion matrix as
 % before.
 %
-function [ totalError, percentageError, confusionM ] = CBRnfold( n, examples, targets )
+function [ totalError, percentageError, confusionM, recall, precision, fMeasure ] = CBRnfold( n, examplesin, targetsin )
 
-	foldsize = length(examples) / n;
+	foldsize = round( length(examplesin) / n );
+	
+	%indexIn = 1+round( (length(examplesin)-1).*rand(foldsize*n,1) );
+	indexIn = 1:foldsize*n;
+	
+	examples = examplesin(indexIn,:);
+	targets = targetsin(indexIn,:);
 	confusionM = zeros(6, 6);
+    
+    recall = cell(6, 1);
+    precision = cell(6, 1);
+    fMeasure = cell(6, 1);
 	
 	for fold=1:n
 		index = ((fold - 1) * foldsize + 1):(fold * foldsize);
@@ -28,13 +38,21 @@ function [ totalError, percentageError, confusionM ] = CBRnfold( n, examples, ta
         currentError = foldsize - trace(currentConfM);
         errorCount(fold) = currentError;
         
+         [recall{fold}, precision{fold}, fMeasure{fold}] = ...
+             calculateRecallPrecisionCBR(currentConfM, 1);
+        
         confusionM = confusionM + currentConfM;
 	end
 	
 	
-	percentageError = 1 - trace(confusionM) / length(examples);
-    totalError = sum(errorCount) / n;
+	percentageError = 1 - trace(confusionM) / length(examplesin);
+    totalError = sum(errorCount);
     
+    [Arecall, Aprecision, AfMeasure] = ...
+             calculateRecallPrecisionCBR(confusionM, 1);
+    Arecall 
+    Aprecision 
+    AfMeasure
     % The perfect output should be ...
     % CBRconfusion_matrix( targets, targets )
 end
