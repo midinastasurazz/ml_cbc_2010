@@ -1,4 +1,4 @@
-function confMatrix = nFold(examples, targets, n)
+function [confMatrix,fMeasure] = nFold(examples, targets, n)
 
 % n-Fold validation
 
@@ -10,6 +10,10 @@ newemotion_targets = cell(1,6);
 attribs = 1:45;
 
 confMatrix = zeros(6);
+
+    recall = cell(6, 1);
+    precision = cell(6, 1);
+    fMeasure = cell(6, 1);
 
 for i = 1:6
     emotion_targets{i} = remap_emotion(targets, i);
@@ -34,8 +38,11 @@ for count = 0:foldsize-1
     
     newClass = clarify(class,trees,test); % the improved classification
     
-    confMatrix = confMatrix + confusion_matrix(newClass,newTargets); % the confusion matrix
+    curConfusionM = confusion_matrix(newClass,newTargets);
+    [recall{count+1}, precision{count+1}, fMeasure{count+1}] = ...
+            calculateRecallPrecisionCBR(curConfusionM, 1);
     
+    confMatrix = confMatrix + curConfusionM;
 end
 
 end

@@ -107,8 +107,13 @@ function [index] = paperAlgorithmSelection( cbr, newcase )
 		newtypic = cbr.cases{best_cases(m)}.typicality;
 		% check whether this is higher than what we have found previously
 		% Or, is this the same and we have a higher typicality
+%<<<<<<< HEAD:src/our/assign3/retrieve.m
 		if ( (newscore > bestScore))% || ...
 				%(newscore == bestScore && newtypic > bestTypic) )
+%=======
+%		if ( (newscore > bestScore) || ...
+%				(newscore == bestScore && newtypic > bestTypic) )
+%>>>>>>> e784886539724932ce642aa1e55dd19649204d6d:src/our/assign3/retrieve.m
 			% Update the best found so far
 			bestScore = newscore;
 			bestPosition = m;

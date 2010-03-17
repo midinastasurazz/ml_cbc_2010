@@ -1,0 +1,8 @@
+function [fmDT, fmANN, fmCBR] = totalTest(file)
+
+if (file == 'clean')
+    temp = 'cleandata_students.txt';
+else
+    temp = 'noisydata_students.txt';
+end
+

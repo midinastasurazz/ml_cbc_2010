@@ -34,7 +34,7 @@ function [recall, precision, fMeasure] = ...
     end
     
     fMeasure(i) = (1 + fMeasureAlpha) * (precision(i) * recall(i)) ...
-      / (fMeasureAlpha * precision(i) + recall(i));
+      / (fMeasureAlpha * precision(i) + recall(i)+eps);
   end
 
 end
