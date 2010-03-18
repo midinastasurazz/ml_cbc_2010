@@ -2,12 +2,8 @@
 % Most of this code was lifted from project1. Performs nfold on CBR with examples
 % and targets. Calculates the error, percentage error and confusion matrix as
 % before.
-%
-%<<<<<<< HEAD:src/our/assign3/CBRnfold.m
+
 function [ totalError, percentageError, confusionM, recall, precision, fMeasure ] = CBRnfold( n, examplesin, targetsin )
-%=======
-%function [ totalError, percentageError, confusionM ] = CBRnfold( n, examplesin, targetsin )
-%>>>>>>> e784886539724932ce642aa1e55dd19649204d6d:src/our/assign3/CBRnfold.m
 
 	foldsize = round( length(examplesin) / n );
 	
